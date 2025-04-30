@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 import API from "../api/axiosInstance";
 import TaskCard from "../components/TaskCard";
 
-interface Task {
-  _id: string;
-  name: string;
-  description: string;
-  budget: number;
-  claimedBy?: string;
-}
-
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
 
@@ -24,7 +16,7 @@ const Tasks = () => {
 
   return (
     <div className="p-6 grid gap-4 md:grid-cols-3">
-      {tasks.map((task: Task) => (
+      {tasks.map((task: any) => (
         <TaskCard key={task._id} task={task} onClaim={claimTask} />
       ))}
     </div>

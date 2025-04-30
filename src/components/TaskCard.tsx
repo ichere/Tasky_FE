@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TaskProps {
-  task: string;
+  task: any;
   onClaim?: (id: string) => void;
   onUnclaim?: (id: string) => void;
 }
