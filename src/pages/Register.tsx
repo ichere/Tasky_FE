@@ -1,27 +1,135 @@
+// import { useState } from "react";
+// import { Link } from "react-router-dom";
+// import API from "../api/axiosInstance";
+// import "./Login.css"; // Reuse the same CSS
+
+// const Register = () => {
+//   const [form, setForm] = useState({
+//     username: "",
+//     email: "",
+//     password: "",
+//   });
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     try {
+//       const res = await API.post("/auth/register", form);
+//       console.log("Registration successful", res.data);
+//       window.location.href = "/login";
+//     } catch (error) {
+//       console.error("Registration Error", error);
+//     }
+//   };
+
+//   return (
+//     <div className="login-wrapper">
+//       <div className="login-illustration">
+//         <img
+//           src="https://www.svgrepo.com/show/439068/registration-form.svg"
+//           alt="Register illustration"
+//         />
+//       </div>
+
+//       <div className="login-container">
+//         <form onSubmit={handleSubmit} className="login-form">
+//           <h2 className="login-heading">Create an Account</h2>
+
+//           <input
+//             type="text"
+//             placeholder="Username"
+//             className="login-input"
+//             onChange={(e) => setForm({ ...form, username: e.target.value })}
+//             required
+//           />
+//           <input
+//             type="email"
+//             placeholder="Email"
+//             className="login-input"
+//             onChange={(e) => setForm({ ...form, email: e.target.value })}
+//             required
+//           />
+//           <input
+//             type="password"
+//             placeholder="Password"
+//             className="login-input"
+//             onChange={(e) => setForm({ ...form, password: e.target.value })}
+//             required
+//           />
+
+//           <button type="submit" className="login-button">
+//             Register
+//           </button>
+
+//           <p className="login-register-text">
+//             Already have an account?
+//             <Link to="/login" className="login-register-link">
+//               Login here
+//             </Link>
+//           </p>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Register;
+
+
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import API from "../api/axiosInstance";
-import { useAuth } from "../context/AuthContext";
+import "./Login.css"; // Reuse the same CSS
 
 const Register = () => {
-  const { setToken } = useAuth();
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await API.post("/auth/register", form);
-    localStorage.setItem("token", res.data.token);
-    setToken(res.data.token);
-    window.location.href = "/tasks";
+    try {
+      const res = await API.post("/auth/register", form);
+      console.log("Registration successful", res.data);
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Registration Error", error);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4">
-        <h2 className="text-2xl font-bold">Login</h2>
-        <input className="border p-2" type="text" placeholder="Username" onChange={(e) => setForm({ ...form, username: e.target.value })} />
-        <input className="border p-2" type="password" placeholder="Password" onChange={(e) => setForm({ ...form, password: e.target.value })} />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
-      </form>
+    <div className="login-wrapper">
+      <div className="login-container">
+        <form onSubmit={handleSubmit} className="login-form">
+          <h2 className="login-heading">Create an Account</h2>
+          <input
+            type="email"
+            placeholder="Email"
+            className="login-input"
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="login-input"
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
+
+          <button type="submit" className="login-button">
+            Register
+          </button>
+
+          <p className="login-register-text">
+            Already have an account?
+            <Link to="/login" className="login-register-link">
+              Login here
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

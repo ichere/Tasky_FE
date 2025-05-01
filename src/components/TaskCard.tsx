@@ -1,5 +1,5 @@
-// src/components/TaskCard.tsx
 import { Task } from "../types";
+import "./TaskCard.css";
 
 interface Props {
   task: Task;
@@ -9,25 +9,19 @@ interface Props {
 
 const TaskCard = ({ task, onClaim, onUnclaim }: Props) => {
   return (
-    <div className="border rounded p-4 shadow-sm bg-white">
-      <h3 className="text-lg font-bold">{task.name}</h3>
+    <div className="task-card">
+      <h3 className="task-title">{task.name}</h3>
       <p>{task.description}</p>
-      <p className="text-blue-600 font-semibold">Budget: ${task.budget}</p>
+      <p className="task-budget">Budget: ${task.budget}</p>
 
       {onClaim && (
-        <button
-          onClick={() => onClaim(task._id)}
-          className="bg-green-500 text-white px-3 py-1 mt-2 rounded"
-        >
+        <button onClick={() => onClaim(task._id)} className="claim-btn">
           Claim
         </button>
       )}
 
       {onUnclaim && (
-        <button
-          onClick={() => onUnclaim(task._id)}
-          className="bg-red-500 text-white px-3 py-1 mt-2 rounded"
-        >
+        <button onClick={() => onUnclaim(task._id)} className="unclaim-btn">
           Unclaim
         </button>
       )}

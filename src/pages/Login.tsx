@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/axiosInstance";
 import { useAuth } from "../context/AuthContext";
+import "./Login.css"; // Make sure this path is correct
 
 const Login = () => {
   const { setToken } = useAuth();
@@ -9,48 +10,41 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await API.post("/auth/login", form);
-    localStorage.setItem("token", res.data.token);
-    setToken(res.data.token);
-    window.location.href = "/tasks";
+    try {
+      const res = await API.post("/auth/login", form);
+      localStorage.setItem("token", res.data.token);
+      setToken(res.data.token);
+      window.location.href = "/tasks";
+    } catch (error) {
+      console.error("Login Error", error);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-white p-6 sm:p-8 rounded-xl shadow-lg"
-      >
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4 text-blue-600">
-          Welcome Back
-        </h2>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h2 className="login-heading">Welcome Back</h2>
 
         <input
           type="text"
           placeholder="Username"
-          className="w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="login-input"
           onChange={(e) => setForm({ ...form, username: e.target.value })}
         />
         <input
           type="password"
           placeholder="Password"
-          className="w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="login-input"
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-        >
+        <button type="submit" className="login-button">
           Login
         </button>
 
-        <p className="mt-4 text-sm text-center text-gray-600">
-          Don&apos;t have an account?{" "}
-          <Link
-            to="/register"
-            className="text-blue-600 font-medium hover:underline"
-          >
+        <p className="login-register-text">
+          Don't have an account?
+          <Link to="/" className="login-register-link">
             Register here
           </Link>
         </p>
